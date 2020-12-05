@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+
+  phpapache:
+    build:
+        context: ./docker/php
+    ports:
+        - "8880:80"
+    volumes:
+        - ./htdocs/:/var/www/html
+    environment:
+        MYSQL_USER: myproject
+        MYSQL_PASSWORD: myproject
+
+  mysql:
+    image: mysql:5.7
+    ports:
+        - 3306:3306
+    expose:
+        - '3306'
+    depends_on:
+        - phpapache
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: myproject
+        MYSQL_USER: myproject
+        MYSQL_PASSWORD: myproject
+    volumes:
+      - db-myproject:/var/lib/mysql
+
+volumes:
+  db-myproject:
