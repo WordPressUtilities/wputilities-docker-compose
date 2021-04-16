@@ -10,8 +10,12 @@ RUN apt-get install -y vim;
 RUN apt-get install -y wget;
 RUN apt-get install -y zip;
 
-# PHP Ext
+# MySQLi
 RUN docker-php-ext-install mysqli;
+
+# Opcache
+RUN docker-php-ext-install opcache
+COPY conf.d/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # Mods
 RUN a2enmod rewrite
